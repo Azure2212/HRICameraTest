@@ -23,5 +23,5 @@ def on_join(data):
         print(f"joined IDRobot: {IDRobot}")
 
 if __name__ == '__main__':
-    socketio.run(app, debug=True)
+    socketio.run(app)
     print('start')
