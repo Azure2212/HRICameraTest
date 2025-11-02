@@ -10,7 +10,7 @@ socketio = SocketIO(app, cors_allowed_origins="*")
 def control_camera():
     IDRobot = request.args.get('IDRobot')
     action = request.args.get('action')
-    IDDeliveryRecord = request.args.get('IDDeliverRecord')
+    IDDeliveryRecord = request.args.get('IDDeliveryRecord')
     if not IDRobot or not action:
         return jsonify({'error': 'Missing IDRobot or action'}), 400
 
