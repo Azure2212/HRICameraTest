@@ -15,7 +15,7 @@ def control_camera():
         return jsonify({'error': 'Missing IDRobot or action'}), 400
 
     socketio.emit('camera_action', {'action': action, 'delivery_record': IDDeliveryRecord}, room=IDRobot)
-    return jsonify({'message': f'Action "{action}" sent to IDRobot "{IDRobot}"'}), 200
+    return jsonify({'message': f'Action "{action}", delivery_record: {IDDeliveryRecord} sent to IDRobot "{IDRobot}"'}), 200
 
 @app.route('/TourchScreenAction/', methods=['POST'])
 def TourchScreenAction():
