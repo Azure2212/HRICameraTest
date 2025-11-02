@@ -1,5 +1,6 @@
 from flask import Flask, request, jsonify
 from flask_socketio import SocketIO, join_room
+import time
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'secret!'
@@ -9,10 +10,11 @@ socketio = SocketIO(app, cors_allowed_origins="*")
 def control_camera():
     IDRobot = request.args.get('IDRobot')
     action = request.args.get('action')
+    IDDeliveryRecord = request.args.get('IDDeliverRecord')
     if not IDRobot or not action:
         return jsonify({'error': 'Missing IDRobot or action'}), 400
 
-    socketio.emit('camera_action', {'action': action}, room=IDRobot)
+    socketio.emit('camera_action', {'action': action, 'delivery_record': IDDeliveryRecord}, room=IDRobot)
     return jsonify({'message': f'Action "{action}" sent to IDRobot "{IDRobot}"'}), 200
 
 @app.route('/TourchScreenAction/', methods=['POST'])
@@ -44,8 +46,8 @@ def on_join(data):
         print(f"joined IDRobot: {IDRobot}")
 
 if __name__ == '__main__':
+    print('Starting server...')
     socketio.run(app, host='0.0.0.0', port=5000)
-    print('start')
     
     #http://192.168.0.17:5000/controlCamera?IDRobot=100&action=stop
     #https://hricameratest.onrender.com/controlCamera/?IDRobot=100&action=stop
