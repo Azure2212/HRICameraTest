@@ -10,12 +10,12 @@ socketio = SocketIO(app, cors_allowed_origins="*")
 def control_camera():
     IDRobot = request.args.get('IDRobot')
     action = request.args.get('action')
-    IDDeliveryRecord = request.args.get('IDDeliveryRecord')
+    videourl = request.args.get('videourl')
     if not IDRobot or not action:
         return jsonify({'error': 'Missing IDRobot or action'}), 400
 
-    socketio.emit('camera_action', {'action': action, 'delivery_record': IDDeliveryRecord}, room=IDRobot)
-    return jsonify({'message': f'Action "{action}", delivery_record: {IDDeliveryRecord} sent to IDRobot "{IDRobot}"'}), 200
+    socketio.emit('camera_action', {'action': action, 'videourl': videourl}, room=IDRobot)
+    return jsonify({'message': f'Action "{action}", videourl: {videourl} sent to IDRobot "{IDRobot}"'}), 200
 
 @app.route('/TourchScreenAction/', methods=['POST'])
 def TourchScreenAction():
